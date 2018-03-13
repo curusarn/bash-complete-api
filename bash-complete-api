@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+
+__print_completions() {
+    printf '%s\n' "${COMPREPLY[@]}"
+}
+
+# source brew bash-completion
+source `brew --prefix`/etc/bash_completion
+
+compl_func=$1
+shift
+#echo "compl_func: $compl_func" >> /tmp/zsh-sracky
+
+COMP_CWORD=$1
+shift
+#echo "COMP_CWORD: $COMP_CWORD" >> /tmp/zsh-sracky
+
+COMP_POINT=`echo "$@" | wc -c`
+#echo "COMP_POINT: $COMP_POINT" >> /tmp/zsh-sracky
+
+COMP_WORDS=($@)
+#echo "COMP_WORDS: ${COMP_WORDS[@]}" >> /tmp/zsh-sracky
+
+COMP_LINE=$*
+#echo "COMP_LINE: $COMP_LINE" >> /tmp/zsh-sracky
+#echo " ---- " >> /tmp/zsh-sracky
+#echo " " >> /tmp/zsh-sracky
+
+eval "$compl_func"
+__print_completions
+
