@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 
 print_help() {
-	echo "USAGE: bash-complete-api [OPTIONS] COMPLETION_FUNCTION COMP_CWORD COMP_POINT COMP_LINE" >&2
-	echo "In human language: function_to_call number_of_words cursor_position current_commandline_contents" >&2
-	echo " " >&2
-	echo "OPTIONS: -h|--help			    Show this help" >&2
-	echo "         -w|--wordbreaks CHARS    Sets wordbreaks to CHARS" >&2
-	echo "         -d|--debug LOGFILE       Log to LOGFILE" >&2
-	echo "         --					    Ends option processing" >&2
+    echo "USAGE: bash-complete-api [OPTIONS] COMPLETION_FUNCTION COMP_CWORD COMP_POINT COMP_LINE" >&2
+    echo "In human language: function_to_call number_of_words cursor_position current_commandline_contents" >&2
+    echo " " >&2
+    echo "OPTIONS: -h|--help                Show this help" >&2
+    echo "         -w|--wordbreaks CHARS    Sets wordbreaks to CHARS" >&2
+    echo "         -d|--debug LOGFILE       Log to LOGFILE" >&2
+    echo "         --                       Ends option processing" >&2
 }
 
 print_completions() {
@@ -18,54 +18,54 @@ wordbreaks=""
 dbglog=""
 [[ "$1" == -* ]] && while true; do
     case $1 in
-		-w|--wordbreaks)
-			# sets wordbreaks
-			if [[ "$2" == -* ]]; then
-				echo "ERR: Invalid value <$2> for -w|--wordbreaks option" >&2
-				print_help
-				exit 2
-			fi
-			wordbreaks="$2"
-			shift	
-			;;
-		-d|--debug)
-			# sets debugging/logging file
-			if [[ "$2" == -* ]]; then
-				echo "ERR: Invalid value <$2> for -d|--debug option" >&2
-				print_help
-				exit 2
-			fi
-			dbglog="$2"
-			shift	
-			;;
-		-h|--help)
-			print_help
-			exit 0
-			;;
-		--)
-			# ends option processing
-			# next argument is positional
-			break	
-			;;
-		-*)
-			echo "ERR: Invalid option <$1>" >&2
-			print_help
-			exit 1
-			;;
-		*)
-			# no more options
-			# next argument is positional
-			break	
-			;;
-	esac
-	shift
+        -w|--wordbreaks)
+            # sets wordbreaks
+            if [[ "$2" == -* ]]; then
+                echo "ERR: Invalid value <$2> for -w|--wordbreaks option" >&2
+                print_help
+                exit 2
+            fi
+            wordbreaks="$2"
+            shift   
+            ;;
+        -d|--debug)
+            # sets debugging/logging file
+            if [[ "$2" == -* ]]; then
+                echo "ERR: Invalid value <$2> for -d|--debug option" >&2
+                print_help
+                exit 2
+            fi
+            dbglog="$2"
+            shift   
+            ;;
+        -h|--help)
+            print_help
+            exit 0
+            ;;
+        --)
+            # ends option processing
+            # next argument is positional
+            break   
+            ;;
+        -*)
+            echo "ERR: Invalid option <$1>" >&2
+            print_help
+            exit 1
+            ;;
+        *)
+            # no more options
+            # next argument is positional
+            break   
+            ;;
+    esac
+    shift
 done
 
 if [ $# -lt 4 ]; then
-	echo "ERR: Not enough positional arguments <$#>" >&2
-	echo "Commandline <$@>" >&2
-	print_help
-	exit 3
+    echo "ERR: Not enough positional arguments <$#>" >&2
+    echo "Commandline <$@>" >&2
+    print_help
+    exit 3
 fi
 
 # source brew bash-completion
@@ -80,8 +80,8 @@ COMP_LINE=$4
 [ "$wordbreaks" != "" ] && COMP_WORDBREAKS="$wordbreaks"
 
 if [ "$dbglog" != "" ]; then
-	echo "### bash-complete-api called at [`date +\"%Y-%m-%d_%H:%M:%S\"`] ###" >> "$dbglog"
-	echo "comp_func: $comp_func" >> "$dbglog"
+    echo "### bash-complete-api called at [`date +\"%Y-%m-%d_%H:%M:%S\"`] ###" >> "$dbglog"
+    echo "comp_func: $comp_func" >> "$dbglog"
     echo "COMP_CWORD: $COMP_CWORD" >> "$dbglog"
     echo "COMP_POINT: $COMP_POINT" >> "$dbglog"
     echo "COMP_WORDS[0]: ${COMP_WORDS[0]}" >> "$dbglog"
