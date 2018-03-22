@@ -1,0 +1,6 @@
+#compdef openstack
+
+function _openstack {
+    compadd -U -- $(/home/simonlet/git/bash-complete-api/bash-complete-api _openstack $((${CURRENT}-1)) $CURSOR "$BUFFER")
+}
+

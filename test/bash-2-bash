@@ -1,0 +1,12 @@
+_scli() 
+{
+     COMPREPLY=($(/home/simonlet/git/bash-complete-api/bash-complete-api --debug "/tmp/bash-complete-api.log" _scli $COMP_CWORD $COMP_POINT "$COMP_LINE"))
+}
+complete -F _scli scli
+
+_git() 
+{
+    COMP_WORDBREAKS=' "><=;|&('
+    COMPREPLY=($(/home/simonlet/git/bash-complete-api/bash-complete-api --wordbreaks ' "><=;|&(' --debug "/tmp/bash-complete-api.log" _git $COMP_CWORD $COMP_POINT "$COMP_LINE"))
+}
+complete -F _git git

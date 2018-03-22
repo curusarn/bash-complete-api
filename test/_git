@@ -1,0 +1,15 @@
+#compdef git
+
+function _git {
+    if [ "$BCA_DBG_LOG" != "" ]; then
+        echo "_git | CURRENT: $CURRENT" >> "$BCA_DBG_LOG"
+        echo "_git | CURSOR: $CURSOR" >> "$BCA_DBG_LOG"
+        echo "_git | BUFFER: $BUFFER" >> "$BCA_DBG_LOG"
+
+        compadd -U -- $(/home/simonlet/git/bash-complete-api/bash-complete-api  --wordbreaks ' "><=;|&(' --debug "$BCA_DBG_LOG" _git $((${CURRENT}-1)) $CURSOR "$BUFFER")
+    else
+        compadd -U -- $(/home/simonlet/git/bash-complete-api/bash-complete-api --wordbreaks ' "><=;|&(' _git $((${CURRENT}-1)) $CURSOR "$BUFFER")
+    fi
+    return 0
+}
+
