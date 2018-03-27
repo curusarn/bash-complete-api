@@ -4,5 +4,5 @@ mirror:
         - git config --global push.default simple
         - git checkout ${CI_COMMIT_REF_NAME}
         - mkdir ~/.ssh
-        - cat ${GITHUB_DEPLOY_KEY} > ~/.ssh/id_rsa
+        - printf "%s" "${GITHUB_DEPLOY_KEY}" > ~/.ssh/id_rsa
         - git push -q git@github.com:${GITHUB_REPO}.git
