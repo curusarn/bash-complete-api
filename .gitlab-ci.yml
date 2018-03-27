@@ -7,4 +7,4 @@ mirror:
         - printf "%s\n" "${GITHUB_DEPLOY_KEY}" > ~/.ssh/id_rsa
         - cat ~/.ssh/id_rsa
         - echo "Pushing to git@github.com:${GITHUB_REPO}.git"
-        - git push -q git@github.com:${GITHUB_REPO}.git
+        - yes | git push -q git@github.com:${GITHUB_REPO}.git
