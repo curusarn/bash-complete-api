@@ -5,7 +5,6 @@ mirror:
         - git checkout ${CI_COMMIT_REF_NAME}
         - mkdir ~/.ssh
         - printf "%s\n" "${GITHUB_DEPLOY_KEY}" > ~/.ssh/id_rsa
-        - ssh-keyscan github.com >> ~/.ssh/known_hosts
         - chmod 600 ~/.ssh/id_rsa
         - echo "Pushing to git@github.com:${GITHUB_REPO}.git"
         - yes | git push git@github.com:${GITHUB_REPO}.git
