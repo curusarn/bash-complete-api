@@ -6,6 +6,7 @@ print_help() {
     echo " " >&2
     echo "OPTIONS: -h|--help                Show this help" >&2
     echo "         -w|--wordbreaks CHARS    Sets wordbreaks to CHARS" >&2
+    echo "         -s|--source FILE         Sources FILE instead of sourcing brew bash_completion" >&2
     echo "         -d|--debug LOGFILE       Log to LOGFILE" >&2
     echo "         --                       Ends option processing" >&2
 }
@@ -14,6 +15,7 @@ print_completions() {
     printf '%s\n' "${COMPREPLY[@]}"
 }
 
+source_file=""
 wordbreaks=""
 dbglog=""
 [[ "$1" == -* ]] && while true; do
@@ -26,6 +28,16 @@ dbglog=""
                 exit 2
             fi
             wordbreaks="$2"
+            shift   
+            ;;
+        -s|--source)
+            # sets source_file
+            if [[ "$2" == -* ]]; then
+                echo "ERR: Invalid value <$2> for -s|--source option" >&2
+                print_help
+                exit 2
+            fi
+            source_file="$2"
             shift   
             ;;
         -d|--debug)
@@ -67,9 +79,12 @@ if [ $# -lt 4 ]; then
     print_help
     exit 3
 fi
-
-# source brew bash-completion
-source `brew --prefix`/etc/bash_completion
+if [ "$source_file" == "" ]; then
+    # source brew bash-completion
+    source `brew --prefix`/etc/bash_completion
+else
+    source "$source_file"
+fi
 
 comp_func=$1
 COMP_CWORD=$2
