@@ -1,5 +1,16 @@
 # bash-complete-api
 
+Bash command generates bash completion based on supplied arguments.
+
+Makes it possible to use bash completions in any shell (I'm using it for zsh).
+## How it works
+
+1. Bash is executed
+1. Desired completions are loaded
+1. Bash completion related variables are populated using specified arguments
+1. Specified bash completion function is called
+1. Generated completion is printed to STDOUT
+
 ## Usage
 ```
 USAGE: bash-complete-api [OPTIONS] COMPLETION_FUNCTION COMP_CWORD COMP_POINT COMP_LINE
@@ -12,3 +23,5 @@ OPTIONS: -h|--help                Show this help
          -d|--debug LOGFILE       Log to LOGFILE
          --                       Ends option processing
 ```
+
+## Examples
