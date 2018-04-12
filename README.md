@@ -23,6 +23,7 @@ OPTIONS: -h|--help                Show this help
          --                       Ends option processing
 ```
 [//]: # "Coming soon:"
+
 [//]: # "-F|--deduce-function     Deduces completion function therefore it does not have to be specified as an argument"
 
 ## Examples
