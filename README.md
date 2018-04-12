@@ -27,3 +27,12 @@ OPTIONS: -h|--help                Show this help
 [//]: # "-F|--deduce-function     Deduces completion function therefore it does not have to be specified as an argument"
 
 ## Examples
+
+Zsh completion file `_openstack`:
+```
+#compdef openstack
+
+function _openstack {
+    compadd -U -- $(bash-complete-api _openstack $((${CURRENT}-1)) $CURSOR "$BUFFER")
+}
+```
