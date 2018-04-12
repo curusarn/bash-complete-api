@@ -7,9 +7,9 @@ function _scli {
         echo "_scli | BUFFER: $BUFFER" >> "$BCA_DBG_LOG"
         echo "_scli | call: bash-complete-api --debug $BCA_DBG_LOG _scli $((${CURRENT}-1)) $CURSOR $BUFFER" >> "$BCA_DBG_LOG"
 
-        compadd -U -- $(/home/simonlet/git/bash-complete-api/bash-complete-api --debug "$BCA_DBG_LOG" _scli $((${CURRENT}-1)) $CURSOR "$BUFFER")
+        compadd -U -- $(bash-complete-api --debug "$BCA_DBG_LOG" _scli $((${CURRENT}-1)) $CURSOR "$BUFFER")
     else
-        compadd -U -- $(/home/simonlet/git/bash-complete-api/bash-complete-api _scli $((${CURRENT}-1)) $CURSOR "$BUFFER")
+        compadd -U -- $(bash-complete-api _scli $((${CURRENT}-1)) $CURSOR "$BUFFER")
     fi
 
     return 0
