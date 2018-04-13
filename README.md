@@ -28,7 +28,8 @@ OPTIONS: -h|--help                Show this help
 
 ## Examples
 
-Zsh completion file `_openstack`:
+[`openstack`](https://github.com/openstack/python-openstackclient) does not have a completion for zsh.  
+This is how I used `bash-complete-api` to create zsh completion for `openstack`:
 ```
 #compdef openstack
 
