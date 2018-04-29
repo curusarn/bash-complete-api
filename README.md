@@ -37,3 +37,8 @@ function _openstack {
     compadd -U -- $(bash-complete-api _openstack $((${CURRENT}-1)) $CURSOR "$BUFFER")
 }
 ```
+
+## Issues
+
+Feel free to create an issue.
+
