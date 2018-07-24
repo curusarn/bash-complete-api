@@ -1,6 +1,6 @@
 # bash-complete-api
 
-Bash command generates bash completion based on supplied arguments.
+Bash command that queries bash completions.
 
 Makes it possible to use bash completions in any shell (I'm using it for zsh).
 ## How it works
