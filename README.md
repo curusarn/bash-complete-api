@@ -18,7 +18,7 @@ In human language: [options] function_to_call number_of_words cursor_position cu
  
 OPTIONS: -h|--help                Show this help
          -w|--wordbreaks CHARS    Sets wordbreaks to CHARS
-         -s|--source FILE         Sources FILE instead of sourcing brew bash_completion
+         -s|--source FILE         Sources FILE instead of sourcing /etc/bash_completion
          -d|--debug LOGFILE       Log to LOGFILE
          --                       Ends option processing
 ```
