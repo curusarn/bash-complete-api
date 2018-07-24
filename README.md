@@ -27,3 +27,18 @@ OPTIONS: -h|--help                Show this help
 [//]: # "-F|--deduce-function     Deduces completion function therefore it does not have to be specified as an argument"
 
 ## Examples
+
+[`openstack`](https://github.com/openstack/python-openstackclient) does not have a completion for zsh.  
+This is how I used `bash-complete-api` to create zsh completion for `openstack`:
+```
+#compdef openstack
+
+function _openstack {
+    compadd -U -- $(bash-complete-api _openstack $((${CURRENT}-1)) $CURSOR "$BUFFER")
+}
+```
+
+## Issues
+
+Feel free to create an issue.
+
