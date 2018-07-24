@@ -107,6 +107,8 @@ if [ "$dbglog" != "" ]; then
     echo " " >> "$dbglog"
 fi
 
-eval "$comp_func"
+# sometimes bash notices out that there is no actual completion running
+#    and produces some errors - we throw them away via 2>/dev/null
+eval "$comp_func" 2>/dev/null
 print_completions
 
