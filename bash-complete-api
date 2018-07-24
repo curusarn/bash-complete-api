@@ -4,17 +4,19 @@ print_help() {
     echo "USAGE: bash-complete-api [OPTIONS] COMPLETION_FUNCTION COMP_CWORD COMP_POINT COMP_LINE" >&2
     echo "In human language: function_to_call number_of_words cursor_position current_commandline_contents" >&2
     echo " " >&2
-    echo "OPTIONS: -h|--help                Show this help" >&2
-    echo "         -w|--wordbreaks CHARS    Sets wordbreaks to CHARS" >&2
-    echo "         -s|--source FILE         Sources FILE instead of sourcing brew bash_completion" >&2
-    echo "         -d|--debug LOGFILE       Log to LOGFILE" >&2
-    echo "         --                       Ends option processing" >&2
+    echo "OPTIONS: -h|--help                    Shows this help" >&2
+    echo "         -w|--wordbreaks CHARS        Sets wordbreaks to CHARS" >&2
+    echo "         -s|--source FILE             Sources FILE after sourcing /etc/bash_completion" >&2
+    echo "         -S|--no-system-completion    Do not source /etc/bash_completion" >&2
+    echo "         -d|--debug LOGFILE           Log to LOGFILE" >&2
+    echo "         --                           Ends option processing" >&2
 }
 
 print_completions() {
     printf '%s\n' "${COMPREPLY[@]}"
 }
 
+source_system_completion=true
 source_file=""
 wordbreaks=""
 dbglog=""
@@ -38,6 +40,11 @@ dbglog=""
                 exit 2
             fi
             source_file="$2"
+            shift   
+            ;;
+        -S|--no-system-completion)
+            # dont source system completion 
+            source_system_completion=false
             shift   
             ;;
         -d|--debug)
@@ -79,10 +86,14 @@ if [ $# -lt 4 ]; then
     print_help
     exit 3
 fi
-if [ "$source_file" == "" ]; then
-    # source system bash-completion
+
+if [ "$source_system_completion" == "true" ]; then
+    # source system bash_completion
     source /etc/bash_completion
-else
+fi
+
+if [ "$source_file" != "" ]; then
+    # source custom file
     source "$source_file"
 fi
 
