@@ -1,0 +1,6 @@
+# bash-complet-api source file for scli 
+
+# source system completion
+[ -d /etc/bash_completion ] && source /etc/bash_completion
+# source custom scli completions
+[ -d ~/.scli/bash_completion ] && source ~/.scli/bash_completion

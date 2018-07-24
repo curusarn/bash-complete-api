@@ -80,8 +80,8 @@ if [ $# -lt 4 ]; then
     exit 3
 fi
 if [ "$source_file" == "" ]; then
-    # source brew bash-completion
-    source `brew --prefix`/etc/bash_completion
+    # source system bash-completion
+    source /etc/bash_completion
 else
     source "$source_file"
 fi
