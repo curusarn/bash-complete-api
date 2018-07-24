@@ -14,13 +14,14 @@ Makes it possible to use bash completions in any shell (I'm using it for zsh).
 ## Usage
 ```
 USAGE: bash-complete-api [OPTIONS] COMPLETION_FUNCTION COMP_CWORD COMP_POINT COMP_LINE
-In human language: [options] function_to_call number_of_words cursor_position current_commandline_contents
- 
-OPTIONS: -h|--help                Show this help
-         -w|--wordbreaks CHARS    Sets wordbreaks to CHARS
-         -s|--source FILE         Sources FILE instead of sourcing /etc/bash_completion
-         -d|--debug LOGFILE       Log to LOGFILE
-         --                       Ends option processing
+In human language: function_to_call number_of_words cursor_position current_commandline_contents
+
+OPTIONS: -h|--help                    Shows this help
+         -w|--wordbreaks CHARS        Sets wordbreaks to CHARS
+         -s|--source FILE             Sources FILE after sourcing /etc/bash_completion
+         -S|--no-system-completion    Do not source /etc/bash_completion
+         -d|--debug LOGFILE           Log to LOGFILE
+         --                           Ends option processing
 ```
 [//]: # "Coming soon:"
 
