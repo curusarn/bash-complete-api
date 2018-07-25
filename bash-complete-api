@@ -16,6 +16,8 @@ print_completions() {
     printf '%s\n' "${COMPREPLY[@]}"
 }
 
+system_completion=/usr/share/bash-completion/bash_completion
+
 source_system_completion=true
 source_file=""
 wordbreaks=""
@@ -89,7 +91,7 @@ fi
 
 if [ "$source_system_completion" == "true" ]; then
     # source system bash_completion
-    source /etc/bash_completion
+    source "$system_completion"
 fi
 
 if [ "$source_file" != "" ]; then
