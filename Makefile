@@ -28,7 +28,7 @@ bash-completion: brew
 	@[ -f $$(brew --prefix)/etc/bash_completion ] || echo "Please install bash-completions"
 
 brew:
-	@brew --version || echo "Please install brew"
+	@brew --version >/dev/null || echo "Please install brew"
 
 else
 
