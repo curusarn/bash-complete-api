@@ -16,7 +16,13 @@ print_completions() {
     printf '%s\n' "${COMPREPLY[@]}"
 }
 
+# Detect if this is macOS
+macos=$(echo $OSTYPE | sed -e '1s/^darwin.*$/yes/')
+
 system_completion=/usr/share/bash-completion/bash_completion
+if [ $macos = "yes" ]; then
+    system_completion=$(brew --prefix)/etc/bash_completion
+fi
 
 source_system_completion=true
 source_file=""
