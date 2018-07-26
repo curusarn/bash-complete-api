@@ -4,16 +4,15 @@
 .PHONY: brew bash-completion brew deps install uninstall description symlink
 
 install: deps
-	@cp bash-complete-api ${DESTDIR}/bash-complete-api
+	@cp bash-complete-api ${SCLI_PLUGIN_DESTDIR}/bash-complete-api
 
 symlink:
-	@ln -fs ${DESTDIR}/bash-complete-api ${SYMLINK_DIR}/scli_bash-complete-api
+	@ln -fs ${SCLI_PLUGIN_SCLI_PLUGIN_DESTDIR}/bash-complete-api ${SYMLINK_DIR}/scli_bash-complete-api
 
 deps: bash-completion
 
 uninstall:
-	rm -rf ${DESTDIR}
-	rm ${SYMLINK_DIR}/scli_bash-complete-api
+	rm -rf ${SCLI_PLUGIN_DESTDIR}
 
 description:
 	@echo "Bash command that queries bash completions."
