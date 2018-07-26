@@ -18,6 +18,9 @@ uninstall:
 description:
 	@echo "Bash command that queries bash completions."
 
+is_library:
+	@true
+
 # macos magic follows
 
 MACOS = $(shell echo $$OSTYPE | sed -e '1s/^darwin.*$$/yes/')
