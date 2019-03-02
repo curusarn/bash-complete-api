@@ -1,0 +1,4 @@
+_compl() {
+    cur="${COMP_WORDS[COMP_CWORD]}" 
+    COMPREPLY=( $(compgen -W "this is simple test" -- "$cur") )
+}
