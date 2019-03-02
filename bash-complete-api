@@ -1,22 +1,32 @@
 #!/usr/bin/env bash
 
 print_help() {
-    echo "USAGE: bash-complete-api [OPTIONS] COMPLETION_FUNCTION COMP_CWORD COMP_POINT COMP_LINE" >&2
+    echo "USAGE: bash-complete-api [OPTIONS] COMPLETION_FUNCTION COMP_CWORD COMP_POINT COMP_LINE [COMP_TYPE] [COMP_KEY]" >&2
     echo "In human language: function_to_call number_of_words cursor_position current_commandline_contents" >&2
     echo " " >&2
-    echo "OPTIONS: -h|--help                Show this help" >&2
-    echo "         -w|--wordbreaks CHARS    Sets wordbreaks to CHARS" >&2
-    echo "         -s|--source FILE         Sources FILE instead of sourcing brew bash_completion" >&2
-    echo "         -F|--deduce-function     Deduces completion function therefore it does not have to be specified as an argument" >&2
-    echo "         -d|--debug LOGFILE       Log to LOGFILE" >&2
-    echo "         --                       Ends option processing" >&2
+    echo "OPTIONS: -h|--help                    Shows this help" >&2
+    echo "         -w|--wordbreaks CHARS        Sets wordbreaks to CHARS" >&2
+    echo "         -s|--source FILE             Sources FILE after sourcing /etc/bash_completion" >&2
+    echo "         -S|--no-system-completion    Do not source /etc/bash_completion" >&2
+    echo "         -F|--deduce-function         Deduces completion function therefore it does not have to be specified as an argument" >&2
+    echo "         -d|--debug LOGFILE           Log to LOGFILE" >&2
+    echo "         --                           Ends option processing" >&2
 }
 
 print_completions() {
     printf '%s\n' "${COMPREPLY[@]}"
 }
 
+# Detect if this is macOS
+macos=$(echo $OSTYPE | sed -e '1s/^darwin.*$/yes/')
+
+system_completion=/usr/share/bash-completion/bash_completion
+if [ $macos = "yes" ]; then
+    system_completion=$(brew --prefix)/etc/bash_completion
+fi
+
 deduce_function=false
+source_system_completion=true
 source_file=""
 wordbreaks=""
 dbglog=""
@@ -46,6 +56,10 @@ dbglog=""
             # sets deduce_function to true
             deduce_function=true
             ;;
+        -S|--no-system-completion)
+            # dont source system completion 
+            source_system_completion=false
+            ;;
         -d|--debug)
             # sets debugging/logging file
             if [[ "$2" == -* ]]; then
@@ -63,6 +77,7 @@ dbglog=""
         --)
             # ends option processing
             # next argument is positional
+            shift
             break   
             ;;
         -*)
@@ -72,7 +87,7 @@ dbglog=""
             ;;
         *)
             # no more options
-            # next argument is positional
+            # this argument is positional
             break   
             ;;
     esac
@@ -86,10 +101,13 @@ if [ $# -lt 4 ]; then
     exit 3
 fi
 
-if [ "$source_file" == "" ]; then
-    # source brew bash-completion
-    source `brew --prefix`/etc/bash_completion
-else
+if [ "$source_system_completion" == "true" ]; then
+    # source system bash_completion
+    source "$system_completion"
+fi
+
+if [ "$source_file" != "" ]; then
+    # source custom file
     source "$source_file"
 fi
 
@@ -106,6 +124,21 @@ COMP_POINT=$2
 COMP_WORDS=($3)
 COMP_LINE=$3
 
+# default: "!" (listing alternatives on partial word completion)
+COMP_TYPE=33
+# if specified as argument
+[ $# -ge 5 ] && COMP_TYPE=$5
+
+# default: TAB
+COMP_KEY=9
+# if specified as argument
+[ $# -ge 6 ] && COMP_KEY=$6
+
+# arguments
+cmd=${COMP_WORDS[0]}
+cur=${COMP_WORDS[COMP_CWORD]}
+prev=${COMP_WORDS[COMP_CWORD-1]}
+
 [ "$wordbreaks" != "" ] && COMP_WORDBREAKS="$wordbreaks"
 
 if [ "$dbglog" != "" ]; then
@@ -117,10 +150,13 @@ if [ "$dbglog" != "" ]; then
     echo "COMP_WORDS[@]: ${COMP_WORDS[@]}" >> "$dbglog"
     echo "COMP_LINE: $COMP_LINE" >> "$dbglog"
     echo "COMP_WORDBREAKS: $COMP_WORDBREAKS" >> "$dbglog"
-    echo " ---- " >> "$dbglog"
+    echo "COMP_TYPE: $COMP_TYPE" >> "$dbglog"
+    echo "COMP_KEY: $COMP_KEY" >> "$dbglog"
+    echo "###" >> "$dbglog"
     echo " " >> "$dbglog"
 fi
 
-eval "$comp_func"
+# sometimes bash notices out that there is no actual completion running
+#    and produces some errors - we throw them away via 2>/dev/null
+eval "$comp_func $cmd $cur $prev" 2>/dev/null
 print_completions
-
