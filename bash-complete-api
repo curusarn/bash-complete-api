@@ -127,7 +127,7 @@ if [ "$dbglog" != "" ]; then
     echo "COMP_WORDS[@]: ${COMP_WORDS[@]}" >> "$dbglog"
     echo "COMP_LINE: $COMP_LINE" >> "$dbglog"
     echo "COMP_WORDBREAKS: $COMP_WORDBREAKS" >> "$dbglog"
-    echo " ---- " >> "$dbglog"
+    echo "###" >> "$dbglog"
     echo " " >> "$dbglog"
 fi
 
@@ -135,4 +135,3 @@ fi
 #    and produces some errors - we throw them away via 2>/dev/null
 eval "$comp_func $cmd $cur $prev" 2>/dev/null
 print_completions
-
