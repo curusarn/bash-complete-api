@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 print_help() {
-    echo "USAGE: bash-complete-api [OPTIONS] COMPLETION_FUNCTION COMP_CWORD COMP_POINT COMP_LINE" >&2
+    echo "USAGE: bash-complete-api [OPTIONS] COMPLETION_FUNCTION COMP_CWORD COMP_POINT COMP_LINE [COMP_TYPE] [COMP_KEY]" >&2
     echo "In human language: function_to_call number_of_words cursor_position current_commandline_contents" >&2
     echo " " >&2
     echo "OPTIONS: -h|--help                    Shows this help" >&2
@@ -112,6 +112,17 @@ COMP_POINT=$3
 COMP_WORDS=($4)
 COMP_LINE=$4
 
+# default: "!" (listing alternatives on partial word completion)
+COMP_TYPE=33
+# if specified as argument
+[ $# -ge 5 ] && COMP_TYPE=$5
+
+# default: TAB
+COMP_KEY=9
+# if specified as argument
+[ $# -ge 6 ] && COMP_KEY=$6
+
+# arguments
 cmd=${COMP_WORDS[0]}
 cur=${COMP_WORDS[COMP_CWORD]}
 prev=${COMP_WORDS[COMP_CWORD-1]}
@@ -127,6 +138,8 @@ if [ "$dbglog" != "" ]; then
     echo "COMP_WORDS[@]: ${COMP_WORDS[@]}" >> "$dbglog"
     echo "COMP_LINE: $COMP_LINE" >> "$dbglog"
     echo "COMP_WORDBREAKS: $COMP_WORDBREAKS" >> "$dbglog"
+    echo "COMP_TYPE: $COMP_TYPE" >> "$dbglog"
+    echo "COMP_KEY: $COMP_KEY" >> "$dbglog"
     echo "###" >> "$dbglog"
     echo " " >> "$dbglog"
 fi
