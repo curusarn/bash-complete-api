@@ -112,6 +112,10 @@ COMP_POINT=$3
 COMP_WORDS=($4)
 COMP_LINE=$4
 
+cmd=${COMP_WORDS[0]}
+cur=${COMP_WORDS[COMP_CWORD]}
+prev=${COMP_WORDS[COMP_CWORD-1]}
+
 [ "$wordbreaks" != "" ] && COMP_WORDBREAKS="$wordbreaks"
 
 if [ "$dbglog" != "" ]; then
@@ -129,6 +133,6 @@ fi
 
 # sometimes bash notices out that there is no actual completion running
 #    and produces some errors - we throw them away via 2>/dev/null
-eval "$comp_func" 2>/dev/null
+eval "$comp_func $cmd $cur $prev" 2>/dev/null
 print_completions
 
